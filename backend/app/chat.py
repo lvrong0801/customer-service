@@ -14,7 +14,7 @@ chat_route = APIRouter()
 
 
 @chat_route.post("/api/chat")
-def chat(chat_request: ChatRequest) -> ChatResponse:
+async def chat(chat_request: ChatRequest) -> ChatResponse:
     return ChatResponse(
         sender_id=chat_request.sender_id,
         message_id=chat_request.message_id if chat_request.message_id else str(uuid.uuid4()),
@@ -23,7 +23,7 @@ def chat(chat_request: ChatRequest) -> ChatResponse:
 
 
 @chat_route.get("/api/chat/history")
-def chat_history(sender_id: str = Query(..., description="用户唯一标识")) -> HistoryResponse:
+async def chat_history(sender_id: str = Query(..., description="用户唯一标识")) -> HistoryResponse:
     # 业务逻辑暂未实现，先返回常量用于测试
     return HistoryResponse(
         sender_id=sender_id,
